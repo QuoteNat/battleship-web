@@ -55,7 +55,7 @@ export class Gameboard {
    * Places a new ship on the gameboard
    * @param {*} length length of the ship
    * @param {[integer, integer]} coordinate first coordinate of the ship
-   * @param {[integer, integer]} direction the direction of the ship, going from coordinate
+   * @param {DIRECTIONS} direction the direction of the ship, going from coordinate
    * @returns A reference to the placed ship
    */
   placeShip(length, coordinate, direction) {
@@ -68,6 +68,12 @@ export class Gameboard {
     return newShip;
   }
 
+  /**
+   * Attempts to place an attack at coordinate
+   * @param {[integer, integer]} coordinate Unique attack position
+   * @returns True if the attack hits a ship, and false otherwise
+   * @throws When coordinate has already received an attack
+   */
   receiveAttack(coordinate) {
     for (const hit of this.hits) {
       if (Vector.from(hit).isEqualTo(coordinate))
@@ -83,6 +89,10 @@ export class Gameboard {
     return false;
   }
 
+  /**
+   *
+   * @returns True if all ships have sunk, false otherwise.
+   */
   allShipsSunk() {
     for (const shipContainer of this.ships) {
       if (shipContainer.ship.isSunk() == false) return false;
