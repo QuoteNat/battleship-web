@@ -20,3 +20,14 @@ describe("Receive attack", () => {
   test("Receive attack that misses", () =>
     expect(gameboard.receiveAttack([10, 10])).toBe(false));
 });
+
+describe("Attack tracking", () => {
+  beforeEach(() => {
+    gameboard.placeShip(1, [0, 0], DIRECTIONS.RIGHT);
+    gameboard.receiveAttack([0, 0]);
+  });
+
+  test("Attacking in same position twice should throw an error", () => {
+    expect(() => gameboard.receiveAttack([0, 0])).toThrow();
+  });
+});

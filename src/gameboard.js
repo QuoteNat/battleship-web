@@ -69,9 +69,14 @@ export class Gameboard {
   }
 
   receiveAttack(coordinate) {
+    for (const hit of this.hits) {
+      if (Vector.from(hit).isEqualTo(coordinate))
+        throw new Error("Cannot place hits in the same location twice");
+    }
     for (const shipContainer of this.ships) {
       if (shipHitDetect(shipContainer, coordinate)) {
         shipContainer.ship.hit();
+        this.hits.push(coordinate);
         return true;
       }
     }
