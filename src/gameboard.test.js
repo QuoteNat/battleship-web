@@ -30,4 +30,7 @@ describe("Attack tracking", () => {
   test("Attacking in same position twice should throw an error", () => {
     expect(() => gameboard.receiveAttack([0, 0])).toThrow();
   });
+
+  test("Track whether all ships are sunk or not", () =>
+    expect(gameboard.allShipsSunk()).toBe(true));
 });

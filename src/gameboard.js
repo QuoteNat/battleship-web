@@ -82,4 +82,11 @@ export class Gameboard {
     }
     return false;
   }
+
+  allShipsSunk() {
+    for (const shipContainer of this.ships) {
+      if (shipContainer.ship.isSunk() == false) return false;
+    }
+    return true;
+  }
 }
