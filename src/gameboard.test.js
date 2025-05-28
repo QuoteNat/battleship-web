@@ -17,4 +17,6 @@ describe("Receive attack", () => {
     expect(gameboard.receiveAttack([1, 0])).toBe(true));
   test("Receive attack after end", () =>
     expect(gameboard.receiveAttack([0, 5])).toBe(false));
+  test("Receive attack that misses", () =>
+    expect(gameboard.receiveAttack([10, 10])).toBe(false));
 });
