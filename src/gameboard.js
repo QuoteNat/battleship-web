@@ -70,10 +70,7 @@ export class Gameboard {
 
   receiveAttack(coordinate) {
     for (const shipContainer of this.ships) {
-      if (
-        shipContainer.coordinate.isEqualTo(coordinate) ||
-        shipHitDetect(shipContainer, coordinate)
-      ) {
+      if (shipHitDetect(shipContainer, coordinate)) {
         shipContainer.ship.hit();
         return true;
       }
