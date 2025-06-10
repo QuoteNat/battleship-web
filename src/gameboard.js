@@ -51,6 +51,8 @@ function shipHitDetect(shipContainer, coordinate) {
 export class Gameboard {
   ships = [];
   hits = [];
+  dimensionX = 10;
+  dimensionY = 10;
   /**
    * Places a new ship on the gameboard
    * @param {*} length length of the ship
