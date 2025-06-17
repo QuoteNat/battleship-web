@@ -81,10 +81,10 @@ export class Gameboard {
       if (Vector.from(hit).isEqualTo(coordinate))
         throw new Error("Cannot place hits in the same location twice");
     }
+    this.hits.push(coordinate);
     for (const shipContainer of this.ships) {
       if (shipHitDetect(shipContainer, coordinate)) {
         shipContainer.ship.hit();
-        this.hits.push(coordinate);
         return true;
       }
     }
