@@ -5,6 +5,14 @@ export class Player {
   constructor() {
     this.gameboard = new Gameboard();
   }
+  doMove(position) {
+    try {
+      this.gameboard.receiveAttack(position);
+    } catch {
+      return false;
+    }
+    return true;
+  }
 }
 
 function randInt(max) {
