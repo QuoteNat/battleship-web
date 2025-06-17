@@ -9,6 +9,11 @@ test("Place ship", () => {
   expect(newShip).not.toBeNull();
 });
 
+test("Don't let new ships intersect old ships", () => {
+  gameboard.placeShip(2, [1, 1], DIRECTIONS.DOWN);
+  expect(gameboard.placeShip(2, [1, 1], DIRECTIONS.UP)).toThrow(Error);
+});
+
 describe("Receive attack", () => {
   beforeEach(() => gameboard.placeShip(5, [0, 0], DIRECTIONS.RIGHT));
   test("Receive attack at start", () =>

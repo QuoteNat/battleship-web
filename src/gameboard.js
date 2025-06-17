@@ -61,13 +61,59 @@ export class Gameboard {
    * @param {DIRECTIONS} direction the direction of the ship, going from coordinate
    * @returns A reference to the placed ship
    */
-  // TODO: Check for existing ships when placing
+  // TODO: Check for out of bounds ships
   placeShip(length, coordinate, direction) {
     let newShip = {
       ship: new Ship(length),
       coordinate: Vector.from(coordinate),
       direction: direction,
     };
+    let coordinates = [newShip.coordinate];
+    switch (direction) {
+      case DIRECTIONS.UP:
+        for (
+          let i = newShip.coordinate.y;
+          i < newShip.coordinate.y - newShip.ship.length;
+          i += 1
+        ) {
+          coordinates.push([newShip.coordinate.x, i]);
+        }
+        break;
+      case DIRECTIONS.DOWN:
+        for (
+          let i = newShip.coordinate.y;
+          i < newShip.coordinate.y + newShip.ship.length;
+          i += 1
+        ) {
+          coordinates.push([newShip.coordinate.x, i]);
+        }
+        break;
+      case DIRECTIONS.LEFT:
+        for (
+          let i = newShip.coordinate.x;
+          i < newShip.coordinate.x - newShip.ship.length;
+          i += 1
+        ) {
+          coordinates.push([i, newShip.coordinate.y]);
+        }
+        break;
+      case DIRECTIONS.RIGHT:
+        for (
+          let i = newShip.coordinate.y;
+          i < newShip.coordinate.y + newShip.ship.length;
+          i += 1
+        ) {
+          coordinates.push([i, newShip.coordinate.y]);
+        }
+        break;
+    }
+    for (const ship of this.ships) {
+      for (const coordinate of coordinates) {
+        if (shipHitDetect(ship, coordinate)) {
+          throw new Error("Can't place ship intersecting existing ship");
+        }
+      }
+    }
     this.ships.push(newShip);
     return newShip;
   }
