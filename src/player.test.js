@@ -6,7 +6,7 @@ test("Player constructor", () => {
 });
 
 test("CPU move", () => {
-  let cpu = new Cpu();
+  let cpu = new Cpu([1]);
   let move = cpu.doMove();
   expect(move[0]).not.toBeNull();
   expect(move[1]).not.toBeNull();

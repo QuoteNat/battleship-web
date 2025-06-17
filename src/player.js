@@ -1,4 +1,4 @@
-import { Gameboard } from "./gameboard";
+import { DIRECTIONS, Gameboard } from "./gameboard";
 export class Player {
   previousMoves = [];
   constructor() {
@@ -54,7 +54,7 @@ function shuffle(array) {
 
 export class Cpu extends Player {
   moves = [];
-  constructor() {
+  constructor(shipLengths) {
     super().gameboard = new Gameboard();
     // Create a series of random moves for the cpu
     for (let x = 0; x < this.gameboard.dimensionX; x += 1) {
@@ -63,6 +63,25 @@ export class Cpu extends Player {
       }
     }
     shuffle(this.moves);
+    for (const shipLength of shipLengths) {
+      let shipPlaced = false;
+      while (!shipPlaced) {
+        try {
+          this.gameboard.placeShip(
+            shipLength,
+            [
+              randInt(this.gameboard.dimensionX),
+              randInt(this.gameboard.dimensionY),
+            ],
+            DIRECTIONS[Object.keys(DIRECTIONS)[randInt(3)]],
+          );
+          shipPlaced = true;
+        } catch {
+          shipPlaced = false;
+        }
+      }
+    }
+    console.log(this.gameboard.ships);
   }
   doMove() {
     return this.moves.pop();
