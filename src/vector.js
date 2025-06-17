@@ -19,4 +19,11 @@ export default class Vector extends Array {
     }
     return true;
   }
+
+  get x() {
+    return this[0];
+  }
+  get y() {
+    return this[1];
+  }
 }
