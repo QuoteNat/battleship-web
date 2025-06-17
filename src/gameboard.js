@@ -51,6 +51,7 @@ function shipHitDetect(shipContainer, coordinate) {
 export class Gameboard {
   ships = [];
   hits = [];
+  // TODO: Set board dimensions via the constructor
   dimensionX = 10;
   dimensionY = 10;
   /**
@@ -60,6 +61,7 @@ export class Gameboard {
    * @param {DIRECTIONS} direction the direction of the ship, going from coordinate
    * @returns A reference to the placed ship
    */
+  // TODO: Check for existing ships when placing
   placeShip(length, coordinate, direction) {
     let newShip = {
       ship: new Ship(length),
