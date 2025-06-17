@@ -1,3 +1,4 @@
+import expect from "expect";
 import { DIRECTIONS } from "./gameboard";
 import { Player, Cpu } from "./player";
 test("Player constructor", () => {
@@ -31,4 +32,12 @@ test("Can't place a ship inside another ship", () => {
   let player = new Player();
   player.placeShip([1, 1], DIRECTIONS.DOWN, 2);
   expect(player.placeShip([1, 1], DIRECTIONS.DOWN, 2)).toBe(false);
+});
+
+test("Player can tell whether it has lost or not", () => {
+  let player = new Player();
+  player.placeShip([1, 1], DIRECTIONS.DOWN, 1);
+  expect(player.hasLost()).toBe(false);
+  player.receiveAttack([1, 1]);
+  expect(player.hasLost()).toBe(true);
 });

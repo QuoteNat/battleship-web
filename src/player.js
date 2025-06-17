@@ -20,6 +20,18 @@ export class Player {
     }
     return true;
   }
+  hasLost() {
+    return this.gameboard.allShipsSunk();
+  }
+  receiveAttack(coordinate) {
+    let attackStatus;
+    try {
+      attackStatus = this.gameboard.receiveAttack(coordinate);
+    } catch {
+      throw "Can't attack the same position twice.";
+    }
+    return attackStatus;
+  }
 }
 
 function randInt(max) {
