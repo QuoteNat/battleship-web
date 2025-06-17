@@ -1,5 +1,4 @@
 import { Gameboard } from "./gameboard";
-
 export class Player {
   previousMoves = [];
   constructor() {
@@ -8,6 +7,14 @@ export class Player {
   doMove(position) {
     try {
       this.gameboard.receiveAttack(position);
+    } catch {
+      return false;
+    }
+    return true;
+  }
+  placeShip(position, direction, length) {
+    try {
+      this.gameboard.placeShip(length, position, direction);
     } catch {
       return false;
     }
