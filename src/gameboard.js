@@ -61,7 +61,6 @@ export class Gameboard {
    * @param {DIRECTIONS} direction the direction of the ship, going from coordinate
    * @returns A reference to the placed ship
    */
-  // TODO: Check for out of bounds ships
   placeShip(length, coordinate, direction) {
     let newShip = {
       ship: new Ship(length),
@@ -106,6 +105,15 @@ export class Gameboard {
           coordinates.push([i, newShip.coordinate.y]);
         }
         break;
+    }
+    for (const coordinate of coordinates) {
+      if (
+        coordinate.x > this.dimensionX ||
+        coordinate.x < 0 ||
+        coordinate.y > this.dimensionY ||
+        coordinate.y < 0
+      )
+        throw new Error("Can't place ship out of bounds");
     }
     for (const ship of this.ships) {
       for (const coordinate of coordinates) {

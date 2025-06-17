@@ -1,3 +1,4 @@
+import expect from "expect";
 import { Gameboard, DIRECTIONS } from "./gameboard.js";
 let gameboard;
 beforeEach(() => {
@@ -11,7 +12,11 @@ test("Place ship", () => {
 
 test("Don't let new ships intersect old ships", () => {
   gameboard.placeShip(2, [1, 1], DIRECTIONS.DOWN);
-  expect(gameboard.placeShip(2, [1, 1], DIRECTIONS.UP)).toThrow(Error);
+  expect(() => gameboard.placeShip(2, [1, 1], DIRECTIONS.UP)).toThrow(Error);
+});
+
+test("Don't let ships be placed out of bounds", () => {
+  expect(() => gameboard.placeShip(1, [-1, -1], DIRECTIONS.UP)).toThrow(Error);
 });
 
 describe("Receive attack", () => {
