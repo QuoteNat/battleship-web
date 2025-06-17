@@ -38,11 +38,33 @@ function randInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+// Fisher yates implementation
+// https://www.geeksforgeeks.org/how-to-shuffle-an-array-using-javascript/
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    // Generate random index
+    const j = Math.floor(Math.random() * (i + 1));
+
+    // Swap elements at indices i and j
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+}
+
 export class Cpu extends Player {
+  moves = [];
+  constructor() {
+    super().gameboard = new Gameboard();
+    // Create a series of random moves for the cpu
+    for (let x = 0; x < this.gameboard.dimensionX; x += 1) {
+      for (let y = 0; y < this.gameboard.dimensionY; y += 1) {
+        this.moves.push([x, y]);
+      }
+    }
+    shuffle(this.moves);
+  }
   doMove() {
-    let x = randInt(10);
-    let y = randInt(10);
-    this.gameboard.receiveAttack([x, y]);
-    return [x, y];
+    return this.moves.pop();
   }
 }
