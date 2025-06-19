@@ -1,0 +1,40 @@
+:root {
+  --tile-dimension: min(calc(50vh / 10), calc(50vw / 10));
+}
+
+html,
+body,
+.boards {
+  width: 100%;
+  height: 100%;
+}
+
+.boards {
+  display: flex;
+  gap: 5vw;
+  justify-content: center;
+  /* flex-direction: column; */
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, var(--tile-dimension));
+  grid-template-rows: repeat(10, var(--tile-dimension));
+}
+
+.tile {
+  width: 100%;
+  height: 100%;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.display {
+  display: flex;
+  justify-content: start;
+}
