@@ -48,6 +48,49 @@ function shipHitDetect(shipContainer, coordinate) {
   return false;
 }
 
+export function getShipCoordinates(shipContainer) {
+  let coordinates = [shipContainer.coordinate];
+  switch (shipContainer.direction) {
+    case DIRECTIONS.UP:
+      for (
+        let i = shipContainer.coordinate.y;
+        i < shipContainer.coordinate.y - shipContainer.ship.length;
+        i += 1
+      ) {
+        coordinates.push([shipContainer.coordinate.x, i]);
+      }
+      break;
+    case DIRECTIONS.DOWN:
+      for (
+        let i = shipContainer.coordinate.y;
+        i < shipContainer.coordinate.y + shipContainer.ship.length;
+        i += 1
+      ) {
+        coordinates.push([shipContainer.coordinate.x, i]);
+      }
+      break;
+    case DIRECTIONS.LEFT:
+      for (
+        let i = shipContainer.coordinate.x;
+        i < shipContainer.coordinate.x - shipContainer.ship.length;
+        i += 1
+      ) {
+        coordinates.push([i, shipContainer.coordinate.y]);
+      }
+      break;
+    case DIRECTIONS.RIGHT:
+      for (
+        let i = shipContainer.coordinate.y;
+        i < shipContainer.coordinate.y + shipContainer.ship.length;
+        i += 1
+      ) {
+        coordinates.push([i, shipContainer.coordinate.y]);
+      }
+      break;
+  }
+  return coordinates;
+}
+
 export class Gameboard {
   ships = [];
   hits = [];
@@ -67,45 +110,7 @@ export class Gameboard {
       coordinate: Vector.from(coordinate),
       direction: direction,
     };
-    let coordinates = [newShip.coordinate];
-    switch (direction) {
-      case DIRECTIONS.UP:
-        for (
-          let i = newShip.coordinate.y;
-          i < newShip.coordinate.y - newShip.ship.length;
-          i += 1
-        ) {
-          coordinates.push([newShip.coordinate.x, i]);
-        }
-        break;
-      case DIRECTIONS.DOWN:
-        for (
-          let i = newShip.coordinate.y;
-          i < newShip.coordinate.y + newShip.ship.length;
-          i += 1
-        ) {
-          coordinates.push([newShip.coordinate.x, i]);
-        }
-        break;
-      case DIRECTIONS.LEFT:
-        for (
-          let i = newShip.coordinate.x;
-          i < newShip.coordinate.x - newShip.ship.length;
-          i += 1
-        ) {
-          coordinates.push([i, newShip.coordinate.y]);
-        }
-        break;
-      case DIRECTIONS.RIGHT:
-        for (
-          let i = newShip.coordinate.y;
-          i < newShip.coordinate.y + newShip.ship.length;
-          i += 1
-        ) {
-          coordinates.push([i, newShip.coordinate.y]);
-        }
-        break;
-    }
+    let coordinates = getShipCoordinates(newShip);
     for (const coordinate of coordinates) {
       if (
         coordinate.x > this.dimensionX ||
