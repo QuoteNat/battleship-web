@@ -7,15 +7,14 @@ class Game {
     this.player2 = new Cpu(this.shipLengths);
   }
 
-  renderBoards() {
-    const player2Grid = document.getElementById("player-2-grid");
-    player2Grid.textContent = "";
-    let player2board = this.player2.boardState;
-    console.log(player2board);
+  renderBoards(div, player) {
+    div.textContent = "";
+    let playerState = player.boardState;
+    console.log(playerState);
     let tileDivs = [];
-    for (let x = 0; x < player2board.width; x += 1) {
+    for (let x = 0; x < playerState.width; x += 1) {
       let column = [];
-      for (let y = 0; y < player2board.height; y += 1) {
+      for (let y = 0; y < playerState.height; y += 1) {
         const tile = document.createElement("div");
         tile.textContent = `(${x}, ${y})`;
         tile.classList = "tile";
@@ -24,8 +23,8 @@ class Game {
       tileDivs.push(column);
     }
 
-    console.log(player2board.shipCoordinates);
-    for (const shipCoordinate of player2board.shipCoordinates) {
+    console.log(playerState.shipCoordinates);
+    for (const shipCoordinate of playerState.shipCoordinates) {
       console.log(shipCoordinate);
       tileDivs[shipCoordinate[0]][shipCoordinate[1]].classList += " ship";
     }
@@ -35,10 +34,11 @@ class Game {
       for (const tile of column) {
         columnDiv.appendChild(tile);
       }
-      player2Grid.appendChild(columnDiv);
+      div.appendChild(columnDiv);
     }
   }
 }
 
 let game = new Game();
-game.renderBoards();
+const player2grid = document.getElementById("player-2-grid");
+game.renderBoards(player2grid, game.player2);
