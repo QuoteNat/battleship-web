@@ -15,7 +15,7 @@ class Game {
       let column = [];
       for (let y = 0; y < playerState.height; y += 1) {
         const tile = document.createElement("div");
-        tile.textContent = `(${x}, ${y})`;
+        // tile.textContent = `(${x}, ${y})`;
         tile.classList = "tile";
         column.push(tile);
       }
@@ -24,6 +24,10 @@ class Game {
 
     for (const shipCoordinate of playerState.shipCoordinates) {
       tileDivs[shipCoordinate[0]][shipCoordinate[1]].classList += " ship";
+    }
+
+    for (const hit of playerState.hits) {
+      tileDivs[hit[0]][hit[1]].textContent = "X";
     }
 
     for (const column of tileDivs) {
@@ -37,5 +41,6 @@ class Game {
 }
 
 let game = new Game();
+game.player2.receiveAttack([1, 1]);
 const player2grid = document.getElementById("player-2-grid");
 game.renderBoards(player2grid, game.player2);
