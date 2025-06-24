@@ -8,42 +8,9 @@ export const DIRECTIONS = Object.freeze({
 });
 
 function shipHitDetect(shipContainer, coordinate) {
-  switch (shipContainer.direction) {
-    case DIRECTIONS.UP:
-      if (
-        coordinate[1] >= shipContainer.coordinate[1] &&
-        coordinate[1] <= shipContainer.coordinate[1] + shipContainer.length &&
-        coordinate[0] == shipContainer.coordinate[0]
-      )
-        return true;
-      break;
-    case DIRECTIONS.DOWN:
-      if (
-        coordinate[1] <= shipContainer.coordinate[1] &&
-        coordinate[1] >=
-          shipContainer.coordinate[1] - shipContainer.ship.length &&
-        coordinate[0] == shipContainer.coordinate[0]
-      )
-        return true;
-      break;
-    case DIRECTIONS.LEFT:
-      if (
-        coordinate[0] <= shipContainer.coordinate[0] &&
-        coordinate[0] >=
-          shipContainer.coordinate[0] - shipContainer.ship.length &&
-        coordinate[1] == shipContainer.coordinate[1]
-      )
-        return true;
-      break;
-    case DIRECTIONS.RIGHT:
-      if (
-        coordinate[0] >= shipContainer.coordinate[0] &&
-        coordinate[0] <=
-          shipContainer.coordinate[0] + shipContainer.ship.length &&
-        coordinate[1] == shipContainer.coordinate[1]
-      )
-        return true;
-      break;
+  let shipCoordinates = getShipCoordinates(shipContainer);
+  for (const shipCoord of shipCoordinates) {
+    if (Vector.from(coordinate).isEqualTo(shipCoord)) return true;
   }
   return false;
 }
@@ -171,6 +138,7 @@ export class Gameboard {
       );
     }
     console.log(shipCoordinates);
+    console.log(this.ships);
     return {
       hits: this.hits,
       shipCoordinates: shipCoordinates,

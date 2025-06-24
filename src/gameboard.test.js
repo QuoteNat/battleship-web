@@ -12,7 +12,10 @@ test("Place ship", () => {
 
 test("Don't let new ships intersect old ships", () => {
   gameboard.placeShip(2, [1, 1], DIRECTIONS.DOWN);
+
   expect(() => gameboard.placeShip(2, [1, 1], DIRECTIONS.UP)).toThrow(Error);
+  expect(() => gameboard.placeShip(2, [1, 2], DIRECTIONS.UP)).toThrow(Error);
+  expect(() => gameboard.placeShip(2, [1, 3], DIRECTIONS.UP)).toThrow(Error);
 });
 
 test("Don't let ships be placed out of bounds", () => {

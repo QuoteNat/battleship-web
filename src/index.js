@@ -10,7 +10,6 @@ class Game {
   renderBoards(div, player) {
     div.textContent = "";
     let playerState = player.boardState;
-    console.log(playerState);
     let tileDivs = [];
     for (let x = 0; x < playerState.width; x += 1) {
       let column = [];
@@ -23,9 +22,7 @@ class Game {
       tileDivs.push(column);
     }
 
-    console.log(playerState.shipCoordinates);
     for (const shipCoordinate of playerState.shipCoordinates) {
-      console.log(shipCoordinate);
       tileDivs[shipCoordinate[0]][shipCoordinate[1]].classList += " ship";
     }
 
