@@ -49,6 +49,7 @@ function shipHitDetect(shipContainer, coordinate) {
 }
 
 export function getShipCoordinates(shipContainer) {
+  // TODO: Figure out why removing the initial coordinate causes various tests to fail
   let coordinates = [shipContainer.coordinate];
   switch (shipContainer.direction) {
     case DIRECTIONS.UP:
@@ -161,5 +162,20 @@ export class Gameboard {
       if (shipContainer.ship.isSunk() == false) return false;
     }
     return true;
+  }
+
+  get state() {
+    let shipCoordinates = [];
+    for (const shipContainer of this.ships) {
+      shipCoordinates = shipCoordinates.concat(
+        getShipCoordinates(shipContainer),
+      );
+    }
+    return {
+      hits: this.hits,
+      shipCoordinates: shipCoordinates,
+      width: this.dimensionX,
+      height: this.dimensionY,
+    };
   }
 }

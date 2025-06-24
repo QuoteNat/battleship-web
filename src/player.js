@@ -32,6 +32,10 @@ export class Player {
     }
     return attackStatus;
   }
+
+  get boardState() {
+    return this.gameboard.state;
+  }
 }
 
 function randInt(max) {
