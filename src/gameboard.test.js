@@ -16,7 +16,7 @@ test("Don't let new ships intersect old ships", () => {
 });
 
 test("Don't let ships be placed out of bounds", () => {
-  expect(() => gameboard.placeShip(1, [-1, -1], DIRECTIONS.UP)).toThrow(Error);
+  expect(() => gameboard.placeShip(2, [-1, -1], DIRECTIONS.UP)).toThrow(Error);
 });
 
 describe("Receive attack", () => {

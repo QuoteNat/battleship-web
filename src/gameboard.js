@@ -49,32 +49,31 @@ function shipHitDetect(shipContainer, coordinate) {
 }
 
 export function getShipCoordinates(shipContainer) {
-  // TODO: Figure out why removing the initial coordinate causes various tests to fail
-  let coordinates = [shipContainer.coordinate];
+  let coordinates = [];
   switch (shipContainer.direction) {
     case DIRECTIONS.UP:
       for (
-        let i = shipContainer.coordinate.y;
-        i < shipContainer.coordinate.y - shipContainer.ship.length;
-        i += 1
+        let i = shipContainer.coordinate[1];
+        i > shipContainer.coordinate[1] - shipContainer.ship.length;
+        i -= 1
       ) {
-        coordinates.push([shipContainer.coordinate.x, i]);
+        coordinates.push([shipContainer.coordinate[0], i]);
       }
       break;
     case DIRECTIONS.DOWN:
       for (
-        let i = shipContainer.coordinate.y;
-        i < shipContainer.coordinate.y + shipContainer.ship.length;
+        let i = shipContainer.coordinate[1];
+        i < shipContainer.coordinate[1] + shipContainer.ship.length;
         i += 1
       ) {
-        coordinates.push([shipContainer.coordinate.x, i]);
+        coordinates.push([shipContainer.coordinate[0], i]);
       }
       break;
     case DIRECTIONS.LEFT:
       for (
         let i = shipContainer.coordinate.x;
-        i < shipContainer.coordinate.x - shipContainer.ship.length;
-        i += 1
+        i > shipContainer.coordinate.x - shipContainer.ship.length;
+        i -= 1
       ) {
         coordinates.push([i, shipContainer.coordinate.y]);
       }
@@ -114,10 +113,10 @@ export class Gameboard {
     let coordinates = getShipCoordinates(newShip);
     for (const coordinate of coordinates) {
       if (
-        coordinate.x > this.dimensionX ||
-        coordinate.x < 0 ||
-        coordinate.y > this.dimensionY ||
-        coordinate.y < 0
+        coordinate[0] >= this.dimensionX ||
+        coordinate[0] < 0 ||
+        coordinate[1] >= this.dimensionY ||
+        coordinate[1] < 0
       )
         throw new Error("Can't place ship out of bounds");
     }
@@ -171,6 +170,7 @@ export class Gameboard {
         getShipCoordinates(shipContainer),
       );
     }
+    console.log(shipCoordinates);
     return {
       hits: this.hits,
       shipCoordinates: shipCoordinates,
