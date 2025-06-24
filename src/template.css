@@ -34,6 +34,10 @@ body,
   border-width: 1px;
 }
 
+.ship {
+  background-color: green;
+}
+
 .display {
   display: flex;
   justify-content: start;

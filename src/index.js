@@ -24,6 +24,12 @@ class Game {
       tileDivs.push(column);
     }
 
+    console.log(player2board.shipCoordinates);
+    for (const shipCoordinate of player2board.shipCoordinates) {
+      console.log(shipCoordinate);
+      tileDivs[shipCoordinate[0]][shipCoordinate[1]].classList += " ship";
+    }
+
     for (const column of tileDivs) {
       let columnDiv = document.createElement("div");
       for (const tile of column) {
