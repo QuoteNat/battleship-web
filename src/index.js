@@ -7,7 +7,7 @@ class Game {
     this.player2 = new Cpu(this.shipLengths);
   }
 
-  renderBoard(div, player) {
+  renderBoard(div, player, hidden) {
     div.textContent = "";
     let playerState = player.boardState;
     let tileDivs = [];
@@ -17,13 +17,16 @@ class Game {
         const tile = document.createElement("div");
         // tile.textContent = `(${x}, ${y})`;
         tile.classList = "tile";
+        if (hidden) tile.classList += " hidden";
         column.push(tile);
       }
       tileDivs.push(column);
     }
 
-    for (const shipCoordinate of playerState.shipCoordinates) {
-      tileDivs[shipCoordinate[0]][shipCoordinate[1]].classList += " ship";
+    if (!hidden) {
+      for (const shipCoordinate of playerState.shipCoordinates) {
+        tileDivs[shipCoordinate[0]][shipCoordinate[1]].classList += " ship";
+      }
     }
 
     for (const hit of playerState.hits) {
@@ -41,8 +44,9 @@ class Game {
 }
 
 let game = new Game();
+game.player1.receiveAttack([1, 1]);
 game.player2.receiveAttack([1, 1]);
 const player1grid = document.getElementById("player-1-grid");
 const player2grid = document.getElementById("player-2-grid");
-game.renderBoard(player1grid, game.player1);
-game.renderBoard(player2grid, game.player2);
+game.renderBoard(player1grid, game.player1, false);
+game.renderBoard(player2grid, game.player2, true);
