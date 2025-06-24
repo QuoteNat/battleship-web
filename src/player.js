@@ -1,8 +1,27 @@
 import { DIRECTIONS, Gameboard } from "./gameboard";
+function placeRandomShips(gameboard, shipLengths) {
+  for (const shipLength of shipLengths) {
+    let shipPlaced = false;
+    while (!shipPlaced) {
+      try {
+        gameboard.placeShip(
+          shipLength,
+          [randInt(gameboard.dimensionX), randInt(gameboard.dimensionY)],
+          DIRECTIONS[Object.keys(DIRECTIONS)[randInt(3)]],
+        );
+        shipPlaced = true;
+      } catch {
+        shipPlaced = false;
+      }
+    }
+  }
+}
+
 export class Player {
   previousMoves = [];
-  constructor() {
+  constructor(shipLengths) {
     this.gameboard = new Gameboard();
+    placeRandomShips(this.gameboard, shipLengths);
   }
   doMove(position) {
     try {
@@ -59,7 +78,7 @@ function shuffle(array) {
 export class Cpu extends Player {
   moves = [];
   constructor(shipLengths) {
-    super().gameboard = new Gameboard();
+    super(shipLengths).gameboard = new Gameboard();
     // Create a series of random moves for the cpu
     for (let x = 0; x < this.gameboard.dimensionX; x += 1) {
       for (let y = 0; y < this.gameboard.dimensionY; y += 1) {
@@ -67,24 +86,8 @@ export class Cpu extends Player {
       }
     }
     shuffle(this.moves);
-    for (const shipLength of shipLengths) {
-      let shipPlaced = false;
-      while (!shipPlaced) {
-        try {
-          this.gameboard.placeShip(
-            shipLength,
-            [
-              randInt(this.gameboard.dimensionX),
-              randInt(this.gameboard.dimensionY),
-            ],
-            DIRECTIONS[Object.keys(DIRECTIONS)[randInt(3)]],
-          );
-          shipPlaced = true;
-        } catch {
-          shipPlaced = false;
-        }
-      }
-    }
+    console.log(shipLengths);
+    placeRandomShips(this.gameboard, shipLengths);
   }
   doMove() {
     return this.moves.pop();
