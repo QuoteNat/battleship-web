@@ -85,7 +85,6 @@ export class Cpu extends Player {
         }
       }
     }
-    console.log(this.gameboard.ships);
   }
   doMove() {
     return this.moves.pop();
