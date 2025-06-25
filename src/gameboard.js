@@ -38,20 +38,20 @@ export function getShipCoordinates(shipContainer) {
       break;
     case DIRECTIONS.LEFT:
       for (
-        let i = shipContainer.coordinate.x;
-        i > shipContainer.coordinate.x - shipContainer.ship.length;
+        let i = shipContainer.coordinate[0];
+        i > shipContainer.coordinate[0] - shipContainer.ship.length;
         i -= 1
       ) {
-        coordinates.push([i, shipContainer.coordinate.y]);
+        coordinates.push([i, shipContainer.coordinate[1]]);
       }
       break;
     case DIRECTIONS.RIGHT:
       for (
-        let i = shipContainer.coordinate.y;
-        i < shipContainer.coordinate.y + shipContainer.ship.length;
+        let i = shipContainer.coordinate[1];
+        i < shipContainer.coordinate[1] + shipContainer.ship.length;
         i += 1
       ) {
-        coordinates.push([i, shipContainer.coordinate.y]);
+        coordinates.push([i, shipContainer.coordinate[1]]);
       }
       break;
   }

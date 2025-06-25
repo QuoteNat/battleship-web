@@ -78,7 +78,7 @@ function shuffle(array) {
 export class Cpu extends Player {
   moves = [];
   constructor(shipLengths) {
-    super(shipLengths).gameboard = new Gameboard();
+    super(shipLengths);
     // Create a series of random moves for the cpu
     for (let x = 0; x < this.gameboard.dimensionX; x += 1) {
       for (let y = 0; y < this.gameboard.dimensionY; y += 1) {
@@ -86,8 +86,7 @@ export class Cpu extends Player {
       }
     }
     shuffle(this.moves);
-    console.log(shipLengths);
-    placeRandomShips(this.gameboard, shipLengths);
+    // placeRandomShips(this.gameboard, shipLengths);
   }
   doMove() {
     return this.moves.pop();

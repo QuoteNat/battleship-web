@@ -4,6 +4,7 @@ class Game {
   shipLengths = [5, 4, 3, 3, 2];
   currentPlayer = 1;
   vsCpu = true;
+  gameover = false;
 
   constructor() {
     this.player1 = new Player(this.shipLengths);
@@ -13,15 +14,34 @@ class Game {
   }
 
   renderBoards() {
-    game._renderBoard(this.player1grid, game.player1, false, false);
-    game._renderBoard(this.player2grid, game.player2, true, true);
+    if (!this.gameover) {
+      game._renderBoard(this.player1grid, game.player1, false, false);
+      game._renderBoard(this.player2grid, game.player2, false, true);
+    } else {
+      game._renderBoard(this.player1grid, game.player1, false, false);
+      game._renderBoard(this.player2grid, game.player2, false, false);
+    }
   }
   _receiveAttack(coordinate) {
     let player = this.currentPlayer == 1 ? this.player2 : this.player1;
     try {
       player.receiveAttack(coordinate);
+      if (player.hasLost()) {
+        console.log("Player won the game!");
+        this.gameover = true;
+        this.renderBoards();
+        return;
+      }
       if (this.vsCpu) {
+        this.currentPlayer = 2;
         this.player1.receiveAttack(this.player2.doMove());
+        if (this.player1.hasLost()) {
+          console.log("CPU wond the game!");
+          this.gameover = true;
+          this.renderBoards();
+          return;
+        }
+        this.currentPlayer = 1;
       }
       this.renderBoards();
     } catch {
@@ -43,7 +63,6 @@ class Game {
         if (attackable) {
           tile.addEventListener("click", (e) => {
             let coordinate = [e.target.dataset.x, e.target.dataset.y];
-            console.log(coordinate);
             this._receiveAttack(coordinate);
           });
           tile.classList += " attackable";
