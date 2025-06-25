@@ -11,6 +11,7 @@ class Game {
     this.player2 = new Cpu(this.shipLengths);
     this.player1grid = document.getElementById("player-1-grid");
     this.player2grid = document.getElementById("player-2-grid");
+    this.statusDiv = document.getElementById("status");
   }
 
   renderBoards() {
@@ -22,12 +23,17 @@ class Game {
       game._renderBoard(this.player2grid, game.player2, false, false);
     }
   }
+
+  updateStatusMessage(message) {
+    this.statusDiv.textContent = message;
+  }
+
   _receiveAttack(coordinate) {
     let player = this.currentPlayer == 1 ? this.player2 : this.player1;
     try {
       player.receiveAttack(coordinate);
       if (player.hasLost()) {
-        console.log("Player won the game!");
+        this.updateStatusMessage("Player has won the game!");
         this.gameover = true;
         this.renderBoards();
         return;
@@ -36,7 +42,7 @@ class Game {
         this.currentPlayer = 2;
         this.player1.receiveAttack(this.player2.doMove());
         if (this.player1.hasLost()) {
-          console.log("CPU wond the game!");
+          this.updateStatusMessage("CPU has won the game!");
           this.gameover = true;
           this.renderBoards();
           return;
