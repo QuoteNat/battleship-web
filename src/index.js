@@ -20,6 +20,9 @@ class Game {
     let player = this.currentPlayer == 1 ? this.player2 : this.player1;
     try {
       player.receiveAttack(coordinate);
+      if (this.vsCpu) {
+        this.player1.receiveAttack(this.player2.doMove());
+      }
       this.renderBoards();
     } catch {
       // Do nothing when move is invalid
