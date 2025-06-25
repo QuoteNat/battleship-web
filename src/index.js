@@ -100,3 +100,9 @@ class Game {
 
 let game = new Game();
 game.renderBoards();
+
+const startCpuGameButton = document.getElementById("start-cpu-game");
+startCpuGameButton.addEventListener("click", () => {
+  game = new Game();
+  game.renderBoards();
+});
