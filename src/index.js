@@ -17,7 +17,7 @@ class Game {
   renderBoards() {
     if (!this.gameover) {
       game._renderBoard(this.player1grid, game.player1, false, false);
-      game._renderBoard(this.player2grid, game.player2, false, true);
+      game._renderBoard(this.player2grid, game.player2, true, true);
     } else {
       game._renderBoard(this.player1grid, game.player1, false, false);
       game._renderBoard(this.player2grid, game.player2, false, false);
