@@ -3,6 +3,7 @@ import "./template.css";
 class Game {
   shipLengths = [5, 4, 3, 3, 2];
   currentPlayer = 1;
+  vsCpu = true;
 
   constructor() {
     this.player1 = new Player(this.shipLengths);
@@ -15,8 +16,15 @@ class Game {
     game._renderBoard(this.player1grid, game.player1, false, false);
     game._renderBoard(this.player2grid, game.player2, true, true);
   }
-  _receiveAttack() {
-    let player = this.currentPlayer == 1 ? this.player1 : this.player2;
+  _receiveAttack(coordinate) {
+    let player = this.currentPlayer == 1 ? this.player2 : this.player1;
+    try {
+      player.receiveAttack(coordinate);
+      this.renderBoards();
+    } catch {
+      // Do nothing when move is invalid
+      return;
+    }
   }
   _renderBoard(div, player, hidden, attackable) {
     div.textContent = "";
@@ -33,6 +41,7 @@ class Game {
           tile.addEventListener("click", (e) => {
             let coordinate = [e.target.dataset.x, e.target.dataset.y];
             console.log(coordinate);
+            this._receiveAttack(coordinate);
           });
           tile.classList += " attackable";
         }
