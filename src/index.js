@@ -2,12 +2,18 @@ import { Player, Cpu } from "./player";
 import "./template.css";
 class Game {
   shipLengths = [5, 4, 3, 3, 2];
+  currentPlayer = 1;
+
   constructor() {
     this.player1 = new Player(this.shipLengths);
     this.player2 = new Cpu(this.shipLengths);
   }
 
-  renderBoard(div, player, hidden) {
+  renderBoards(player1BoardDiv, player2BoardDiv) {
+    game._renderBoard(player1BoardDiv, game.player1, false, false);
+    game._renderBoard(player2BoardDiv, game.player2, true, true);
+  }
+  _renderBoard(div, player, hidden, attackable) {
     div.textContent = "";
     let playerState = player.boardState;
     let tileDivs = [];
@@ -18,6 +24,15 @@ class Game {
         // tile.textContent = `(${x}, ${y})`;
         tile.classList = "tile";
         if (hidden) tile.classList += " hidden";
+        if (attackable) {
+          tile.addEventListener("click", (e) => {
+            let coordinate = [e.target.dataset.x, e.target.dataset.y];
+            console.log(coordinate);
+          });
+          tile.classList += " attackable";
+        }
+        tile.dataset.x = `${x}`;
+        tile.dataset.y = `${y}`;
         column.push(tile);
       }
       tileDivs.push(column);
@@ -44,9 +59,6 @@ class Game {
 }
 
 let game = new Game();
-game.player1.receiveAttack([1, 1]);
-game.player2.receiveAttack([1, 1]);
 const player1grid = document.getElementById("player-1-grid");
 const player2grid = document.getElementById("player-2-grid");
-game.renderBoard(player1grid, game.player1, false);
-game.renderBoard(player2grid, game.player2, true);
+game.renderBoards(player1grid, player2grid);
