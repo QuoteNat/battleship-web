@@ -15,7 +15,7 @@ export default class Vector extends Array {
   isEqualTo(vector) {
     if (this.length != vector.length) return false;
     for (let i = 0; i < this.length; i++) {
-      if (this[i] !== vector[i]) return false;
+      if (this[i] != vector[i]) return false;
     }
     return true;
   }
