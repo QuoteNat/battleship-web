@@ -7,11 +7,16 @@ class Game {
   constructor() {
     this.player1 = new Player(this.shipLengths);
     this.player2 = new Cpu(this.shipLengths);
+    this.player1grid = document.getElementById("player-1-grid");
+    this.player2grid = document.getElementById("player-2-grid");
   }
 
-  renderBoards(player1BoardDiv, player2BoardDiv) {
-    game._renderBoard(player1BoardDiv, game.player1, false, false);
-    game._renderBoard(player2BoardDiv, game.player2, true, true);
+  renderBoards() {
+    game._renderBoard(this.player1grid, game.player1, false, false);
+    game._renderBoard(this.player2grid, game.player2, true, true);
+  }
+  _receiveAttack() {
+    let player = this.currentPlayer == 1 ? this.player1 : this.player2;
   }
   _renderBoard(div, player, hidden, attackable) {
     div.textContent = "";
@@ -59,6 +64,4 @@ class Game {
 }
 
 let game = new Game();
-const player1grid = document.getElementById("player-1-grid");
-const player2grid = document.getElementById("player-2-grid");
-game.renderBoards(player1grid, player2grid);
+game.renderBoards();
