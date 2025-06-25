@@ -45,11 +45,16 @@ body,
 
 .ship {
   background-color: green;
+  color: red;
 }
 
 .hidden {
   background-color: gray;
   color: white;
+}
+
+.hidden.ship {
+  color: red;
 }
 
 .display {

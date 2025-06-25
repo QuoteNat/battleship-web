@@ -55,10 +55,8 @@ class Game {
       tileDivs.push(column);
     }
 
-    if (!hidden) {
-      for (const shipCoordinate of playerState.shipCoordinates) {
-        tileDivs[shipCoordinate[0]][shipCoordinate[1]].classList += " ship";
-      }
+    for (const shipCoordinate of playerState.shipCoordinates) {
+      tileDivs[shipCoordinate[0]][shipCoordinate[1]].classList += " ship";
     }
 
     for (const hit of playerState.hits) {
